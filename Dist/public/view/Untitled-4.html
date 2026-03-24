@@ -1,0 +1,108 @@
+<div class="p-5 space-y-4" bis_skin_checked="1">
+
+  <div bis_skin_checked="1">
+    <label class="block text-xs font-bold text-gray-500 uppercase mb-1.5">
+      Frequency
+    </label>
+    <div class="relative" bis_skin_checked="1">
+      <select id="schedule-frequency"
+        class="transition-all block w-full appearance-none rounded-lg border border-gray-300 p-2.5 text-sm text-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+        <option class="hidden" value="hourly">Every Hour</option>
+        <option value="0" selected="">Daily</option>
+        <option value="1">Weekly</option>
+        <option value="2" disabled="">Custom (Select Days)</option>
+
+      </select>
+    </div>
+  </div>
+
+  <div id="custom-day-selector-container" class="animate-fade-in-down transition-all duration-300 group-checkbox"
+    bis_skin_checked="1">
+    <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
+      Run on Days
+    </label>
+    <div class="flex flex-wrap gap-2" bis_skin_checked="1">
+      <label class="cursor-pointer">
+        <input type="checkbox" value="2" class="peer sr-only" checked="">
+        <div
+          class="px-3 py-2 rounded-lg border border-slate-200 bg-white text-[13px] font-bold text-slate-500 hover:bg-slate-50 peer-checked:bg-blue-50 peer-checked:text-blue-700 peer-checked:border-blue-500 transition-all shadow-sm"
+          bis_skin_checked="1">
+          Monday
+        </div>
+      </label>
+
+      <label class="cursor-pointer">
+        <input type="checkbox" value="3" class="peer sr-only" checked="">
+        <div
+          class="px-3 py-2 rounded-lg border border-slate-200 bg-white text-[13px] font-bold text-slate-500 hover:bg-slate-50 peer-checked:bg-blue-50 peer-checked:text-blue-700 peer-checked:border-blue-500 transition-all shadow-sm"
+          bis_skin_checked="1">
+          Tuesday
+        </div>
+      </label>
+
+      <label class="cursor-pointer">
+        <input type="checkbox" value="4" class="peer sr-only" checked="">
+        <div
+          class="px-3 py-2 rounded-lg border border-slate-200 bg-white text-[13px] font-bold text-slate-500 hover:bg-slate-50 peer-checked:bg-blue-50 peer-checked:text-blue-700 peer-checked:border-blue-500 transition-all shadow-sm"
+          bis_skin_checked="1">
+          Wednesday
+        </div>
+      </label>
+
+      <label class="cursor-pointer">
+        <input type="checkbox" value="5" class="peer sr-only" checked="">
+        <div
+          class="px-3 py-2 rounded-lg border border-slate-200 bg-white text-[13px] font-bold text-slate-500 hover:bg-slate-50 peer-checked:bg-blue-50 peer-checked:text-blue-700 peer-checked:border-blue-500 transition-all shadow-sm"
+          bis_skin_checked="1">
+          Thursday
+        </div>
+      </label>
+
+      <label class="cursor-pointer">
+        <input type="checkbox" value="6" class="peer sr-only" checked="">
+        <div
+          class="px-3 py-2 rounded-lg border border-slate-200 bg-white text-[13px] font-bold text-slate-500 hover:bg-slate-50 peer-checked:bg-blue-50 peer-checked:text-blue-700 peer-checked:border-blue-500 transition-all shadow-sm"
+          bis_skin_checked="1">
+          Friday
+        </div>
+      </label>
+
+      <label class="cursor-pointer">
+        <input type="checkbox" value="7" class="peer sr-only">
+        <div
+          class="px-3 py-2 rounded-lg border border-slate-200 bg-white text-[13px] font-bold text-slate-500 hover:bg-slate-50 peer-checked:bg-blue-50 peer-checked:text-blue-700 peer-checked:border-blue-500 transition-all shadow-sm"
+          bis_skin_checked="1">
+          Saturday
+        </div>
+      </label>
+
+      <label class="cursor-pointer">
+        <input type="checkbox" value="1" class="peer sr-only">
+        <div
+          class="px-3 py-2 rounded-lg border border-slate-200 bg-white text-[13px] font-bold text-slate-500 hover:bg-slate-50 peer-checked:bg-blue-50 peer-checked:text-blue-700 peer-checked:border-blue-500 transition-all shadow-sm"
+          bis_skin_checked="1">
+          Sunday
+        </div>
+      </label>
+
+    </div>
+  </div>
+  <div bis_skin_checked="1">
+    <label class="flex items-center gap-2 text-xs font-bold text-gray-500 uppercase mb-1.5">
+      Start At
+    </label>
+    <div class="relative" bis_skin_checked="1">
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none" bis_skin_checked="1">
+        <i class="fa-regular fa-clock text-gray-400"></i>
+      </div>
+      <input type="time" value="00:00" id="schedule-time"
+        class="block w-full rounded-lg border border-gray-300 pl-10 p-2.5 text-sm text-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+    </div>
+  </div>
+
+  <button type="button" id="save-schedule"
+    class="w-full group mt-2 py-2.5 px-4 bg-green-50 border border-green-200 text-green-700 hover:bg-green-100 hover:border-green-300 hover:text-green-800 rounded-lg shadow-sm font-medium transition-all flex items-center justify-center gap-2 text-sm">
+    <i class="fa-solid fa-floppy-disk text-green-700 group-hover:text-green-800 transition-colors"></i>
+    Save Schedule Changes
+  </button>
+</div>

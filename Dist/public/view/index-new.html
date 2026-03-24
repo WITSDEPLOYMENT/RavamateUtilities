@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>MyBuddy Utilities</title>
+
+    <link href="css/output.css" rel="stylesheet">
+    <link href="css/fonts.css" rel="stylesheet">
+
+    <link href="/vendor/material-symbols/index.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="./mdlogo_web.ico">
+
+    <link rel="stylesheet" type="text/css" href="/vendor/daterangepicker/daterangepicker.css" />
+    <script src="/vendor/jquery/jquery.min.js"></script>
+
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-200 font-sans antialiased min-h-screen transition-colors duration-200 flex flex-col">
+    <header
+        class="bg-surface-light dark:bg-surface-dark shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <div class="bg-primary/10 dark:bg-white py-1 px-2 rounded-lg">
+                        <!-- <img class="object-contain w-15 h-15" src="./mdlogo_web.ico" alt=""> -->
+                        <img src="./mdlogo_web.ico" alt="" class="size-7 object-contain dark:bg-white">
+                    </div>
+                    <h1 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        MyBuddy Utilities
+                    </h1>
+                </div>
+                <nav aria-label="Tabs" class="hidden md:flex space-x-1">
+                    <a class="border-b-2 border-primary text-primary whitespace-nowrap py-2 px-2 text-sm font-medium flex items-center gap-2 bg-primary/5 dark:bg-primary/10"
+                        href="./index.html">
+                        <span class="material-symbols-outlined text-lg">dashboard</span>
+                        Main
+                    </a>
+                    <a
+                        class="hidden border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 whitespace-nowrap py-2 px-2 text-sm font-medium flex items-center gap-2 transition-colors">
+                        <span class="material-symbols-outlined text-lg">dns</span>
+                        DB Connection
+                    </a>
+                    <a class="border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 whitespace-nowrap py-2 px-2 text-sm font-medium flex items-center gap-2 transition-colors"
+                        href="./settings.html">
+                        <span class="material-symbols-outlined text-lg">settings</span>
+                        Settings
+                    </a>
+
+                    <div class="flex items-center gap-2 px-2">
+                        <button
+                            class="flex items-center p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 transition-colors"
+                            id="toggle-theme">
+                            <span class="material-symbols-outlined">dark_mode</span>
+                        </button>
+                        <div class="md:hidden">
+                            <button
+                                class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400">
+                                <span class="material-symbols-outlined">menu</span>
+                            </button>
+                        </div>
+                    </div>
+                </nav>
+
+            </div>
+        </div>
+    </header>
+
+    <div class="min-h-screen bg-slate-900 text-slate-300 font-sans p-4 sm:p-6 lg:p-8 selection:bg-blue-500/30">
+        <div class="max-w-7xl mx-auto space-y-8">
+
+            <div class="max-w-7xl mx-auto space-y-6">
+
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h1 class="text-2xl font-extrabold text-white tracking-tight">Synchronization Hub</h1>
+                        <p class="text-sm text-slate-400 mt-1">Manage and monitor data transfers to ERIC.</p>
+                    </div>
+                    <div class="flex gap-3">
+                        <button
+                            class="px-4 py-2 bg-slate-800 border border-slate-700 rounded-xl text-sm font-bold text-white hover:bg-slate-700 transition-colors flex items-center gap-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-600">
+                            <span class="material-symbols-outlined text-[18px]">refresh</span>
+                            Refresh Data
+                        </button>
+                    </div>
+                </div>
+
+                <div
+                    class="flex p-1.5 bg-slate-800/40 border border-slate-700/50 rounded-2xl w-fit backdrop-blur-sm shadow-sm">
+                    <button id="tab-btn-syncs" onclick="switchTab('syncs')"
+                        class="flex items-center gap-2 px-5 py-2.5 text-sm font-bold rounded-xl bg-blue-500/20 text-blue-400 border border-blue-500/30 shadow-sm transition-all">
+                        <span class="material-symbols-outlined text-[18px]">grid_view</span>
+                        Active Syncs
+                    </button>
+                    <button id="tab-btn-history" onclick="switchTab('history')"
+                        class="flex items-center gap-2 px-5 py-2.5 text-sm font-bold rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 border border-transparent transition-all">
+                        <span class="material-symbols-outlined text-[18px]">history</span>
+                        Activity Log
+                    </button>
+                </div>
+
+                <div class="relative min-h-[500px]">
+
+                    <div id="tab-content-syncs"
+                        class="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full transition-opacity duration-300 opacity-100">
+
+                        <div
+                            class="group relative flex flex-col p-6 rounded-[24px] bg-slate-800/40 border border-slate-700/50 backdrop-blur-sm hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-xl hover:-translate-y-1">
+                            <div class="flex justify-between items-start mb-6">
+                                <h3 class="text-lg font-bold text-white tracking-tight">Sync SO to ERIC</h3>
+                                <div
+                                    class="w-12 h-12 flex items-center justify-center bg-blue-500/10 text-blue-400 rounded-2xl group-hover:scale-110 transition-transform duration-300">
+                                    <span class="material-symbols-outlined text-[24px]">sync_alt</span>
+                                </div>
+                            </div>
+                            <div class="space-y-1 mb-8">
+                                <div class="flex items-baseline gap-2">
+                                    <span class="text-5xl font-extrabold text-white tracking-tight">14</span>
+                                    <span
+                                        class="text-[13px] font-bold text-slate-400 uppercase tracking-wider">Pending</span>
+                                </div>
+                                <div class="text-sm text-slate-400 flex items-center gap-1.5 mt-2">
+                                    <span class="material-symbols-outlined text-[16px] text-slate-500">history</span>
+                                    Past Failed Records: <span
+                                        class="text-rose-400 font-bold bg-rose-400/10 px-1.5 rounded">0</span>
+                                </div>
+                            </div>
+                            <div class="mt-auto pt-5 border-t border-slate-700/50 flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <label class="relative inline-flex items-center cursor-pointer group/toggle">
+                                        <input type="checkbox" value="" class="sr-only peer" checked="">
+                                        <div
+                                            class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-500 group-hover/toggle:ring-2 ring-blue-500/20">
+                                        </div>
+                                        <span class="ml-2 text-[13px] font-bold text-slate-400">Auto-sync</span>
+                                    </label>
+                                    <button title="Set Schedule"
+                                        class="text-slate-500 hover:text-blue-400 transition-colors focus:outline-none">
+                                        <span class="material-symbols-outlined text-[20px]">calendar_clock</span>
+                                    </button>
+                                </div>
+                                <button
+                                    class="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold rounded-xl transition-all shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_20px_rgba(37,99,235,0.5)] active:scale-95">
+                                    Process
+                                </button>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group relative flex flex-col p-6 rounded-[24px] bg-slate-800/40 border border-slate-700/50 backdrop-blur-sm hover:border-emerald-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-xl hover:-translate-y-1">
+                            <div class="flex justify-between items-start mb-6">
+                                <h3 class="text-lg font-bold text-white tracking-tight">Sync Payment to ERIC</h3>
+                                <div
+                                    class="w-12 h-12 flex items-center justify-center bg-emerald-500/10 text-emerald-400 rounded-2xl group-hover:scale-110 transition-transform duration-300">
+                                    <span class="material-symbols-outlined text-[24px]">payments</span>
+                                </div>
+                            </div>
+                            <div class="space-y-1 mb-8">
+                                <div class="flex items-baseline gap-2">
+                                    <span class="text-5xl font-extrabold text-white tracking-tight">5</span>
+                                    <span
+                                        class="text-[13px] font-bold text-slate-400 uppercase tracking-wider">Pending</span>
+                                </div>
+                                <div class="text-sm text-slate-400 flex items-center gap-1.5 mt-2">
+                                    <span class="material-symbols-outlined text-[16px] text-slate-500">history</span>
+                                    Past Failed Records: <span
+                                        class="text-rose-400 font-bold bg-rose-400/10 px-1.5 rounded">1</span>
+                                </div>
+                            </div>
+                            <div class="mt-auto pt-5 border-t border-slate-700/50 flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <label class="relative inline-flex items-center cursor-pointer group/toggle">
+                                        <input type="checkbox" value="" class="sr-only peer">
+                                        <div
+                                            class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-500 group-hover/toggle:ring-2 ring-emerald-500/20">
+                                        </div>
+                                        <span class="ml-2 text-[13px] font-bold text-slate-400">Auto-sync</span>
+                                    </label>
+                                    <button title="Set Schedule"
+                                        class="text-slate-500 hover:text-emerald-400 transition-colors focus:outline-none">
+                                        <span class="material-symbols-outlined text-[20px]">calendar_clock</span>
+                                    </button>
+                                </div>
+                                <button
+                                    class="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold rounded-xl transition-all shadow-[0_0_15px_rgba(5,150,105,0.3)] hover:shadow-[0_0_20px_rgba(5,150,105,0.5)] active:scale-95">
+                                    Process
+                                </button>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group relative flex flex-col p-6 rounded-[24px] bg-slate-800/40 border border-slate-700/50 backdrop-blur-sm hover:border-amber-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-xl hover:-translate-y-1">
+                            <div class="flex justify-between items-start mb-6">
+                                <h3 class="text-lg font-bold text-white tracking-tight">Sync Return to ERIC</h3>
+                                <div
+                                    class="w-12 h-12 flex items-center justify-center bg-amber-500/10 text-amber-400 rounded-2xl group-hover:scale-110 transition-transform duration-300">
+                                    <span class="material-symbols-outlined text-[24px]">assignment_return</span>
+                                </div>
+                            </div>
+                            <div class="space-y-1 mb-8">
+                                <div class="flex items-baseline gap-2">
+                                    <span class="text-5xl font-extrabold text-white tracking-tight opacity-50">0</span>
+                                    <span
+                                        class="text-[13px] font-bold text-slate-400 uppercase tracking-wider">Pending</span>
+                                </div>
+                                <div class="text-sm text-slate-400 flex items-center gap-1.5 mt-2">
+                                    <span class="material-symbols-outlined text-[16px] text-slate-500">history</span>
+                                    Past Failed Records: <span
+                                        class="text-slate-500 font-bold bg-slate-700/50 px-1.5 rounded">-</span>
+                                </div>
+                            </div>
+                            <div class="mt-auto pt-5 border-t border-slate-700/50 flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <label class="relative inline-flex items-center cursor-pointer group/toggle">
+                                        <input type="checkbox" value="" class="sr-only peer">
+                                        <div
+                                            class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-amber-500 group-hover/toggle:ring-2 ring-amber-500/20">
+                                        </div>
+                                        <span class="ml-2 text-[13px] font-bold text-slate-400">Auto-sync</span>
+                                    </label>
+                                    <button title="Set Schedule"
+                                        class="text-slate-500 hover:text-amber-400 transition-colors focus:outline-none">
+                                        <span class="material-symbols-outlined text-[20px]">calendar_clock</span>
+                                    </button>
+                                </div>
+                                <button
+                                    class="px-6 py-2 bg-amber-600 hover:bg-amber-500 text-white text-sm font-bold rounded-xl transition-all shadow-[0_0_15px_rgba(217,119,6,0.3)] hover:shadow-[0_0_20px_rgba(217,119,6,0.5)] active:scale-95">
+                                    Process
+                                </button>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group relative flex flex-col p-6 rounded-[24px] bg-slate-800/40 border border-slate-700/50 backdrop-blur-sm hover:border-purple-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-xl hover:-translate-y-1">
+                            <div class="flex justify-between items-start mb-6">
+                                <h3 class="text-lg font-bold text-white tracking-tight">Sync Auto Stock Transfer</h3>
+                                <div
+                                    class="w-12 h-12 flex items-center justify-center bg-purple-500/10 text-purple-400 rounded-2xl group-hover:scale-110 transition-transform duration-300">
+                                    <span class="material-symbols-outlined text-[24px]">local_shipping</span>
+                                </div>
+                            </div>
+                            <div class="space-y-1 mb-8">
+                                <div class="flex items-baseline gap-2">
+                                    <span class="text-5xl font-extrabold text-white tracking-tight">42</span>
+                                    <span
+                                        class="text-[13px] font-bold text-slate-400 uppercase tracking-wider">Pending</span>
+                                </div>
+                                <div class="text-sm text-slate-400 flex items-center gap-1.5 mt-2">
+                                    <span class="material-symbols-outlined text-[16px] text-slate-500">history</span>
+                                    Past Failed Records: <span
+                                        class="text-rose-400 font-bold bg-rose-400/10 px-1.5 rounded">3</span>
+                                </div>
+                            </div>
+                            <div class="mt-auto pt-5 border-t border-slate-700/50 flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <label class="relative inline-flex items-center cursor-pointer group/toggle">
+                                        <input type="checkbox" value="" class="sr-only peer" checked="">
+                                        <div
+                                            class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-purple-500 group-hover/toggle:ring-2 ring-purple-500/20">
+                                        </div>
+                                        <span class="ml-2 text-[13px] font-bold text-slate-400">Auto-sync</span>
+                                    </label>
+                                    <button title="Set Schedule"
+                                        class="text-slate-500 hover:text-purple-400 transition-colors focus:outline-none">
+                                        <span class="material-symbols-outlined text-[20px]">calendar_clock</span>
+                                    </button>
+                                </div>
+                                <button
+                                    class="px-6 py-2 bg-purple-600 hover:bg-purple-500 text-white text-sm font-bold rounded-xl transition-all shadow-[0_0_15px_rgba(147,51,234,0.3)] hover:shadow-[0_0_20px_rgba(147,51,234,0.5)] active:scale-95">
+                                    Process
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="tab-content-history"
+                        class="hidden absolute top-0 left-0 w-full bg-slate-800/40 rounded-[24px] border border-slate-700/50 backdrop-blur-sm shadow-xl overflow-hidden transition-opacity duration-300 opacity-0">
+                        <div
+                            class="p-6 border-b border-slate-700/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-800/20">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-10 h-10 flex items-center justify-center bg-slate-700/50 text-slate-300 rounded-xl">
+                                    <span class="material-symbols-outlined text-[20px]">manage_search</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-white tracking-tight">Recent Activity Log</h3>
+                                    <p class="text-[13px] text-slate-400">History of all manual and automated sync
+                                        processes.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-3">
+                                <div class="relative">
+                                    <span
+                                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-[18px]">search</span>
+                                    <input type="text" placeholder="Search logs..."
+                                        class="w-full sm:w-64 pl-9 pr-4 py-2 bg-slate-900/50 border border-slate-700 rounded-xl text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all">
+                                </div>
+                                <button
+                                    class="px-4 py-2 bg-slate-700/50 border border-slate-600 rounded-xl text-sm font-bold text-white hover:bg-slate-700 transition-colors">
+                                    Filter
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse whitespace-nowrap">
+                                <thead>
+                                    <tr
+                                        class="bg-slate-900/50 text-[11px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-700/50">
+                                        <th class="px-6 py-4">Process Name</th>
+                                        <th class="px-6 py-4">Status</th>
+                                        <th class="px-6 py-4">Records Processed</th>
+                                        <th class="px-6 py-4">Triggered By</th>
+                                        <th class="px-6 py-4">Execution Time</th>
+                                        <th class="px-6 py-4 text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-sm divide-y divide-slate-700/50">
+                                    <tr class="hover:bg-slate-800/50 transition-colors group">
+                                        <td class="px-6 py-4 font-bold text-slate-200 flex items-center gap-2">
+                                            <span class="w-2 h-2 rounded-full bg-blue-500"></span> Sync SO to ERIC
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span
+                                                class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 w-max">
+                                                <span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                                Success
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span class="text-white font-mono font-bold">120</span> / <span
+                                                class="text-slate-500">120</span>
+                                        </td>
+                                        <td class="px-6 py-4 text-slate-400 flex items-center gap-1.5">
+                                            <span class="material-symbols-outlined text-[16px]">smart_toy</span>
+                                            Auto-sync
+                                        </td>
+                                        <td class="px-6 py-4 text-slate-400">
+                                            2/28/2026, 2:15 PM
+                                        </td>
+                                        <td class="px-6 py-4 text-right">
+                                            <button
+                                                class="text-slate-500 hover:text-white transition-colors py-1.5 px-2 rounded-lg hover:bg-slate-700 flex items-center justify-center">
+                                                <span
+                                                    class="material-symbols-outlined text-[18px] m-auto">visibility</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="hover:bg-slate-800/50 transition-colors group">
+                                        <td class="px-6 py-4 font-bold text-slate-200 flex items-center gap-2">
+                                            <span class="w-2 h-2 rounded-full bg-purple-500"></span> Auto Stock Transfer
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span
+                                                class="px-2.5 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 w-max">
+                                                <span class="material-symbols-outlined text-[14px]">warning</span>
+                                                Partial
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span class="text-white font-mono font-bold">42</span> / <span
+                                                class="text-slate-500">45</span>
+                                            <span class="text-rose-400 ml-1 text-xs font-bold">(3 Failed)</span>
+                                        </td>
+                                        <td class="px-6 py-4 text-slate-400 flex items-center gap-1.5">
+                                            <span class="material-symbols-outlined text-[16px]">person</span> admin_user
+                                        </td>
+                                        <td class="px-6 py-4 text-slate-400">
+                                            2/28/2026, 1:45 PM
+                                        </td>
+                                        <td class="px-6 py-4 text-right">
+                                            <button
+                                                class="text-slate-500 hover:text-white transition-colors py-1.5 px-2 rounded-lg hover:bg-slate-700 flex items-center justify-center">
+                                                <span
+                                                    class="material-symbols-outlined text-[18px] m-auto">visibility</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div
+                            class="px-6 py-4 border-t border-slate-700/50 bg-slate-800/20 flex items-center justify-between">
+                            <p class="text-xs font-bold text-slate-500">Showing 1 to 2 of 124 entries</p>
+                            <div class="flex gap-2">
+                                <button
+                                    class="px-3 py-1.5 bg-slate-800 border border-slate-700 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-colors">Previous</button>
+                                <button
+                                    class="px-3 py-1.5 bg-slate-800 border border-slate-700 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-colors">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <script>
+                function switchTab(tab) {
+                    // Elements
+                    const btnSyncs = document.getElementById('tab-btn-syncs');
+                    const btnHistory = document.getElementById('tab-btn-history');
+                    const contentSyncs = document.getElementById('tab-content-syncs');
+                    const contentHistory = document.getElementById('tab-content-history');
+
+                    // Styles for Active / Inactive states
+                    const activeClassStr = 'bg-blue-500/20 text-blue-400 border-blue-500/30 shadow-sm'.split(' ');
+                    const inactiveClassStr = 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 border-transparent'.split(' ');
+
+                    if (tab === 'syncs') {
+                        // Setup Buttons
+                        btnSyncs.classList.remove(...inactiveClassStr);
+                        btnSyncs.classList.add(...activeClassStr);
+                        btnHistory.classList.remove(...activeClassStr);
+                        btnHistory.classList.add(...inactiveClassStr);
+
+                        // Animate out History
+                        contentHistory.classList.remove('opacity-100');
+                        contentHistory.classList.add('opacity-0');
+
+                        setTimeout(() => {
+                            contentHistory.classList.add('hidden');
+                            // Animate in Syncs
+                            contentSyncs.classList.remove('hidden');
+                            // Tiny delay to allow display:block to register before changing opacity
+                            requestAnimationFrame(() => {
+                                contentSyncs.classList.remove('opacity-0');
+                                contentSyncs.classList.add('opacity-100');
+                            });
+                        }, 300); // 300ms matches Tailwind duration-300
+
+                    } else if (tab === 'history') {
+                        // Setup Buttons
+                        btnHistory.classList.remove(...inactiveClassStr);
+                        btnHistory.classList.add(...activeClassStr);
+                        btnSyncs.classList.remove(...activeClassStr);
+                        btnSyncs.classList.add(...inactiveClassStr);
+
+                        // Animate out Syncs
+                        contentSyncs.classList.remove('opacity-100');
+                        contentSyncs.classList.add('opacity-0');
+
+                        setTimeout(() => {
+                            contentSyncs.classList.add('hidden');
+                            // Animate in History
+                            contentHistory.classList.remove('hidden');
+                            requestAnimationFrame(() => {
+                                contentHistory.classList.remove('opacity-0');
+                                contentHistory.classList.add('opacity-100');
+                            });
+                        }, 300);
+                    }
+                }
+            </script>
+
+        </div>
+    </div>
+
+    <footer class="bg-surface-light dark:bg-surface-dark border-t border-gray-200 dark:border-gray-700 mt-auto">
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p class="text-sm text-gray-500 dark:text-gray-400">© 2026 MyBuddy System Utilities. All rights reserved.
+            </p>
+            <div class="flex items-center gap-4">
+                <span class="flex items-center gap-1 text-xs text-gray-400 dark:text-gray-500">
+                    <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                    Server Connected
+                </span>
+                <span class="text-xs text-gray-400 dark:text-gray-500">v1.0.0</span>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <div id="jobconfig" aria-labelledby="modal-title" aria-modal="true" class="hidden relative z-50" role="dialog">
+        <div class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity"></div>
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                <div
+                    class="relative transform overflow-hidden rounded-xl bg-white dark:bg-surface-dark text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-2xl border border-gray-200 dark:border-gray-700">
+                    <div
+                        class="flex items-center justify-between border-b border-gray-100 dark:border-gray-700 px-6 py-4 bg-gray-50 dark:bg-gray-800/50">
+                        <h3 class="text-lg font-semibold leading-6 text-gray-900 dark:text-white flex items-center gap-2"
+                            id="modal-title">
+                            <span class="material-symbols-outlined text-primary">tune</span>
+                            Configure Sync Options
+                        </h3>
+                        <button
+                            class="close-modal rounded-md bg-transparent text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 flex"
+                            type="button">
+                            <span class="sr-only">Close</span>
+                            <span class="material-symbols-outlined">close</span>
+                        </button>
+                    </div>
+                    <div class="px-6 pt-6 pb-2 max-h-[75vh] overflow-y-auto custom-scrollbar">
+                        <div class="mb-2 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                            <label
+                                class="relative flex cursor-pointer rounded-lg border-2 border-primary bg-primary/5 p-4 shadow-sm focus:outline-none ring-offset-2 focus-within:ring-primary">
+                                <input id="jobManual" checked class="sr-only" name="job-type" type="radio"
+                                    value="manual" />
+                                <span class="flex flex-1">
+                                    <span class="flex flex-col">
+                                        <div class="block text-sm font-medium text-gray-900 dark:text-white">Manual
+                                            Execution</div>
+                                        <span
+                                            class="mt-1 flex items-center text-xs text-gray-500 dark:text-gray-400">One-time
+                                            immediate run. Best for ad-hoc procedures.</span>
+                                    </span>
+                                </span>
+                                <span aria-hidden="true"
+                                    class="material-symbols-outlined text-gray-300 dark:text-gray-600">radio_button_unchecked</span>
+                            </label>
+                            <label
+                                class="relative flex cursor-pointer rounded-lg border-2 border-primary bg-primary/5 p-4 shadow-sm focus:outline-none ring-offset-2 focus-within:ring-primary">
+                                <input id="jobScheduled" class="sr-only" name="job-type" type="radio"
+                                    value="scheduled" />
+                                <span class="flex flex-1">
+                                    <span class="flex flex-col">
+                                        <div class="block text-sm font-medium text-primary">Scheduled Sync</div>
+                                        <span
+                                            class="mt-1 flex items-center text-xs text-gray-600 dark:text-gray-400">Recurring
+                                            execution based on interval, daily, or CRON rules.</span>
+                                    </span>
+                                </span>
+                                <span aria-hidden="true"
+                                    class="material-symbols-outlined text-primary">check_circle</span>
+                            </label>
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 mb-2">
+                            <div class="sm:col-span-2">
+                                <label class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-200"
+                                    for="job_name">Procedure</label>
+                                <input
+                                    class="block w-full rounded-md border-0 py-2 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 bg-white dark:bg-gray-800"
+                                    id="job_name" name="job_name" placeholder="e.g. Nightly Inventory Update" readonly
+                                    type="text" />
+                            </div>
+                        </div>
+
+                        <div class="py-2" id="sp-params-input">
+                            <div class="flex items-center justify-between">
+                                <label
+                                    class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-200">Parameters</label>
+                                <button
+                                    class="hidden text-xs font-medium text-primary hover:text-primary/80 flex items-center gap-1 transition-colors"
+                                    type="button">
+                                    <span class="material-symbols-outlined text-sm">add</span> Add Parameter
+                                </button>
+                            </div>
+
+                            <div id="sp-params-fields"
+                                class="space-y-3 bg-gray-50/50 dark:bg-gray-900/20 p-3 rounded-lg border border-dashed border-gray-300 dark:border-gray-700">
+
+                            </div>
+
+                        </div>
+
+                        <form id="scheduleSection" onsubmit="event.preventDefault()" class="mt-4 mb-4 space-y-6">
+                            <div
+                                class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm overflow-hidden">
+                                <div
+                                    class="px-6 py-5 border-b border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
+                                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                        <h4
+                                            class="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                                            <span class="py-1.5 px-3 rounded-md bg-primary/10 text-primary">
+                                                <span class="material-symbols-outlined text-lg">calendar_month</span>
+                                            </span>
+                                            Frequency Strategy
+                                        </h4>
+
+                                        <div class="flex p-1 bg-gray-200 dark:bg-gray-700 rounded-lg self-start sm:self-auto"
+                                            id="tab-container">
+                                            <button type="button"
+                                                class="sched-type sched-tab-selected px-4 py-1.5 text-xs font-medium rounded-md transition-all duration-200 active:scale-95 active:translate-y-px bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm"
+                                                data-tab="interval">
+                                                Interval
+                                            </button>
+                                            <button type="button"
+                                                class="sched-type px-4 py-1.5 text-xs font-medium rounded-md transition-all duration-200 active:scale-95 active:translate-y-px text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                                                data-tab="daily">
+                                                Daily
+                                            </button>
+                                            <button type="button" disabled
+                                                class="px-4 py-1.5 text-xs font-medium rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors opacity-50 cursor-not-allowed">
+                                                Weekly
+                                            </button>
+
+                                            <button type="button" disabled
+                                                class="px-4 py-1.5 text-xs font-medium rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors opacity-50 cursor-not-allowed">
+                                                CRON
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="pt-6 pb-4 px-6">
+                                    <div class="flex flex-col gap-6">
+
+                                        <div id="interval" class="sched-tab flex flex-col items-center justify-center">
+                                            <label for="run-time-interval"
+                                                class="text-sm text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider font-bold text-[10px]">
+                                                Set Interval
+                                            </label>
+                                            <div
+                                                class="flex items-baseline gap-3 text-lg text-gray-600 dark:text-gray-300">
+                                                <span class="text-base font-medium">Run every</span>
+                                                <div class="relative group">
+                                                    <input
+                                                        class="block w-32 text-center border-0 border-b-2 border-gray-200 dark:border-gray-700 bg-transparent py-1 text-3xl font-extrabold text-primary dark:text-white focus:ring-0 focus:border-primary transition-all placeholder:text-gray-300"
+                                                        id="run-time-interval" name="run-time-interval" type="number"
+                                                        value="30" min="1" placeholder="--" />
+                                                </div>
+                                                <span
+                                                    class="text-lg font-semibold text-gray-900 dark:text-white">minutes</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Add New Time Section -->
+                                        <div id="daily" class="hidden sched-tab">
+                                            <div class="flex flex-col items-center justify-center">
+                                                <label for="daily-time-input"
+                                                    class="text-sm text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider font-bold text-[10px]">
+                                                    Add Daily Schedule
+                                                </label>
+                                                <div
+                                                    class="flex flex-col sm:flex-row items-center justify-center gap-6 text-lg text-gray-600 dark:text-gray-300 w-full">
+                                                    <span class="text-base font-medium">Run daily at</span>
+
+                                                    <div class="flex items-center gap-3">
+                                                        <div class="relative group">
+                                                            <input
+                                                                class="block w-40 text-center border-0 border-b-2 border-gray-200 dark:border-gray-700 bg-transparent py-1 text-xl font-mono font-bold text-primary dark:text-white focus:ring-0 focus:border-primary transition-all placeholder:text-gray-300"
+                                                                id="daily-time-input" name="daily-time-input"
+                                                                type="time" value="09:00" step="300">
+                                                        </div>
+                                                    </div>
+
+                                                    <button type="button" id="add-sched-time"
+                                                        class="ml-2 px-4 py-2 text-sm font-medium rounded-md bg-primary text-white hover:bg-primary/90 transition-colors shadow-sm flex items-center gap-2">
+                                                        <span class="material-symbols-outlined text-sm">add</span>
+                                                        Add Time
+                                                    </button>
+                                                </div>
+
+                                                <p class="text-xs text-gray-400 dark:text-gray-500 mt-3">Add multiple
+                                                    times
+                                                    for
+                                                    the job to run throughout the day</p>
+                                            </div>
+
+                                            <!-- Selected Times List -->
+                                            <div
+                                                class="mt-6 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700">
+                                                <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+                                                    <div class="flex items-center justify-between">
+                                                        <h5
+                                                            class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                                                            Scheduled Times</h5>
+                                                        <span class="text-xs text-gray-500 dark:text-gray-400">Click to
+                                                            remove</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="p-4">
+                                                    <div id="selected-times-list"
+                                                        class="flex flex-wrap items-center justify-center gap-2">
+                                                        <!-- Time chips will appear here -->
+                                                        <!-- <div class="group relative">
+                                                            <div
+                                                                class="px-4 py-2 rounded-lg bg-primary/10 text-primary border border-primary/20 flex items-center gap-2 cursor-pointer hover:bg-primary/20 transition-colors">
+                                                                <span
+                                                                    class="font-mono text-sm font-semibold">02:00</span>
+                                                                <span
+                                                                    class="material-symbols-outlined text-sm group-hover:text-red-500 transition-colors">close</span>
+                                                            </div>
+                                                        </div> -->
+                                                        <!-- 
+                                                        <div class="group relative">
+                                                            <div class="px-4 py-2 rounded-lg bg-primary/10 text-primary border border-primary/20 flex items-center gap-2 cursor-pointer hover:bg-primary/20 transition-colors"
+                                                               >
+                                                                <span
+                                                                    class="font-mono text-sm font-semibold">09:00</span>
+                                                                <span
+                                                                    class="material-symbols-outlined text-sm group-hover:text-red-500 transition-colors">close</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="group relative">
+                                                            <div class="px-4 py-2 rounded-lg bg-primary/10 text-primary border border-primary/20 flex items-center gap-2 cursor-pointer hover:bg-primary/20 transition-colors"
+                                                               >
+                                                                <span
+                                                                    class="font-mono text-sm font-semibold">14:30</span>
+                                                                <span
+                                                                    class="material-symbols-outlined text-sm group-hover:text-red-500 transition-colors">close</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="group relative">
+                                                            <div class="px-4 py-2 rounded-lg bg-primary/10 text-primary border border-primary/20 flex items-center gap-2 cursor-pointer hover:bg-primary/20 transition-colors"
+                                                               >
+                                                                <span
+                                                                    class="font-mono text-sm font-semibold">18:00</span>
+                                                                <span
+                                                                    class="material-symbols-outlined text-sm group-hover:text-red-500 transition-colors">close</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="group relative">
+                                                            <div class="px-4 py-2 rounded-lg bg-primary/10 text-primary border border-primary/20 flex items-center gap-2 cursor-pointer hover:bg-primary/20 transition-colors"
+                                                               >
+                                                                <span
+                                                                    class="font-mono text-sm font-semibold">22:45</span>
+                                                                <span
+                                                                    class="material-symbols-outlined text-sm group-hover:text-red-500 transition-colors">close</span>
+                                                            </div>
+                                                        </div> -->
+                                                    </div>
+
+                                                    <div id="empty-state" class="text-center py-6">
+                                                        <span
+                                                            class="material-symbols-outlined text-4xl text-gray-300 dark:text-gray-600 mb-2">schedule</span>
+                                                        <p class="text-sm text-gray-500 dark:text-gray-400">No times
+                                                            added
+                                                            yet
+                                                        </p>
+                                                        <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">Add
+                                                            your
+                                                            first
+                                                            schedule time above</p>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+                                        <div
+                                            class="rounded-lg border border-blue-100 dark:border-blue-900/30 bg-blue-50/50 dark:bg-blue-900/10 p-4 flex gap-4 items-start">
+                                            <span id="summary-icon"
+                                                class="material-symbols-outlined text-blue-600 dark:text-blue-400 mt-0.5">info</span>
+                                            <div class="space-y-1">
+                                                <p class="text-sm font-medium text-blue-900 dark:text-blue-100">Schedule
+                                                    Summary</p>
+                                                <p id="intervalDescription"
+                                                    class="summary text-xs text-blue-700 dark:text-blue-300 leading-relaxed">
+                                                    This job will execute automatically every <span class="font-bold">0
+                                                        minutes</span>.
+                                                    <br>
+                                                    (Approx. <span
+                                                        class="font-mono bg-blue-100 dark:bg-blue-900 px-1 rounded">0</span>
+                                                    runs per day).
+                                                </p>
+
+                                                <p id="dailyDescription"
+                                                    class="hidden summary text-xs text-blue-700 dark:text-blue-300 leading-relaxed">
+                                                    This job will execute automatically
+                                                    <span class="font-bold"><span id="total-daily-sched">0</span>
+                                                        times</span> per day at:
+
+                                                    <span id="sched-times">
+                                                    </span>
+                                                    <br>
+                                                </p>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div
+                                            class="pt-2 flex items-center justify-between border-t border-gray-100 dark:border-gray-700">
+                                            <span class="text-xs text-gray-500 dark:text-gray-400">Server Time:
+                                                <span id="server-time-display">
+                                                </span>
+                                            </span>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- <div class="flex flex-col gap-8">
+
+                                        <div class="flex flex-col items-center justify-center py-6">
+                                            <label for="run_time"
+                                                class="text-sm text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider font-bold text-[10px]">
+                                                Set Daily Schedule
+                                            </label>
+
+                                            <div
+                                                class="flex items-baseline gap-3 text-lg text-gray-600 dark:text-gray-300">
+                                                <span class="text-base font-medium">Run every day at</span>
+
+                                                <div class="relative group">
+                                                    <input
+                                                        class="block w-60 text-center border-0 border-b-2 border-gray-200 dark:border-gray-700 bg-transparent py-1 text-3xl font-mono font-bold text-primary dark:text-white focus:ring-0 focus:border-primary transition-all placeholder:text-gray-300"
+                                                        id="run_time" name="run_time" type="time" value="02:00" />
+                                                </div>
+
+                                                <span
+                                                    class="text-sm font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">Server
+                                                    Time</span>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="rounded-lg border border-blue-100 dark:border-blue-900/30 bg-blue-50/50 dark:bg-blue-900/10 p-4 flex gap-4 items-start">
+                                            <span
+                                                class="material-symbols-outlined text-blue-600 dark:text-blue-400 mt-0.5">update</span>
+                                            <div class="space-y-1">
+                                                <p class="text-sm font-medium text-blue-900 dark:text-blue-100">
+                                                    Schedule Forecast</p>
+                                                <p class="text-xs text-blue-700 dark:text-blue-300 leading-relaxed">
+                                                    This job is scheduled to run once every 24 hours.
+                                                    <br>
+                                                    Next execution: <span
+                                                        class="font-mono bg-blue-100 dark:bg-blue-900 px-1 rounded font-bold">Tomorrow,
+                                                        02:00:00</span>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                    </div> -->
+                                </div>
+
+
+                            </div>
+                        </form>
+
+                        <div id="execution-logs"
+                            class="mb-4 mt-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden shadow-sm">
+                            <div
+                                class="flex items-center justify-between px-4 py-2 border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 ">
+                                <span
+                                    class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-white flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-sm">terminal</span>
+                                    Response Log
+                                </span>
+                                <div class="flex gap-2">
+                                    <button id="exec-sync-btn"
+                                        class="text-white focus:outline-none focus:ring-2 focus:ring-green-600 bg-green-700 hover:bg-green-500 focus:ring-offset-2 sm:w-auto transition-all active:scale-95 text-xs font-medium flex items-center gap-1 px-2 py-1 rounded"
+                                        type="button">
+                                        <span class="material-symbols-outlined text-sm">sync</span>
+                                        Execute Sync
+                                    </button>
+                                    <button id="clear-execution-logs"
+                                        class="text-white focus:outline-none focus:ring-2 focus:ring-red-600 bg-red-500 hover:bg-red-700 focus:ring-offset-2 sm:w-auto transition-all active:scale-95 text-xs font-medium flex items-center gap-1 px-2 py-1 rounded"
+                                        type="button">
+                                        <span class="material-symbols-outlined text-sm">delete_sweep</span>
+                                        Clear Log
+                                    </button>
+                                </div>
+
+                            </div>
+                            <div
+                                class="relative bg-gray-900 text-gray-300 font-mono text-xs h-60 overflow-y-auto custom-scrollbar">
+                                <div class="absolute p-4 text-xs" id="execution-logs-output">
+                                </div>
+
+                                <div id="log-spinner"
+                                    class="absolute hidden relative w-full h-full bg-gray-700 opacity-50 rounded flex items-center justify-center">
+                                    <div
+                                        class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div id="modal-footer">
+                        <div
+                            class="bg-gray-50 dark:bg-gray-800/50 px-6 py-2 sm:flex sm:flex-row-reverse sm:gap-3 border-t border-gray-100 dark:border-gray-700">
+                            <button
+                                class="inline-flex w-full justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto active:scale-95 transition-all"
+                                type="button" id="save-config-btn">
+
+                                <span class="material-symbols-outlined text-2xl mr-2 font-extralight">
+                                    schedule
+                                </span>
+                                <span class="m-auto"> Save Schedule</span>
+                            </button>
+
+
+                            <!-- <button
+                            class="inline-flex w-full justify-center rounded-md bg-green-600 px-4 py-1 text-sm font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 sm:w-auto transition-colors transition-all active:scale-95"
+                            type="button" id="exec-sync-btn">
+                            <span class="material-symbols-outlined text-2xl mr-2 font-extralight">
+                                sync
+                            </span>
+                            <span class="m-auto">Execute Sync</span>
+                        </button> -->
+
+                            <button
+                                class="close-modal inline-flex w-full justify-center rounded-md bg-white dark:bg-gray-800 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 sm:mt-0 sm:w-auto transition-colors transition-all active:scale-95"
+                                type="button">
+                                <span class="m-auto">Cancel</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="log-details-modal"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/60 backdrop-blur-sm hidden transition-opacity opacity-0"
+        aria-labelledby="modal-title" role="dialog" aria-modal="true">
+
+        <div class="relative w-full max-w-lg transform overflow-hidden rounded-xl bg-white dark:bg-gray-900 text-left shadow-2xl transition-all sm:my-8 scale-95 opacity-0 duration-300 border border-gray-100 dark:border-gray-800"
+            id="log-panel">
+
+            <div
+                class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-green-50/50 dark:bg-gray-700 flex items-center justify-between">
+                <div class="flex items-center gap-3 ">
+                    <div id="log-icon-bg" class="p-2 flex items-center justify-center w-10 h-10 rounded-full">
+                        <span class="material-symbols-outlined text-xl" id="logs-icon"></span>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold leading-6 text-gray-900 dark:text-white"
+                            id="logs-service-name">
+
+                        </h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 font-mono">
+                            <span>ID: #LOG-</span><span id="logs-id"></span>
+                        </p>
+                    </div>
+                </div>
+
+                <button type="button"
+                    class="log-close rounded-md bg-transparent text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 p-2 flex items-center transition-colors focus:outline-none">
+                    <span class="material-symbols-outlined text-xl">close</span>
+                </button>
+            </div>
+
+            <div class="px-6 py-6 space-y-5 dark:bg-gray-800 ">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label
+                            class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Timestamp</label>
+                        <div class="flex items-center gap-2 text-xs text-gray-700 dark:text-gray-300">
+                            <span class="material-symbols-outlined text-base opacity-70">calendar_month</span>
+                            <span id="logs-execution-date"></span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Service
+                            Code</label>
+                        <code
+                            class="text-xs font-mono bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-gray-700 dark:text-gray-300">sp1_mcp_allignment</code>
+                    </div>
+                </div>
+
+
+
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1 mt-6">Log
+                        Output</label>
+                    <div>
+                        <!-- <div
+                        class="rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 p-3">
+                        <p class="text-sm font-mono text-gray-600 dark:text-gray-300 break-all">
+                        </p>
+                    </div> -->
+                        <div
+                            class="rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 p-3 max-h-60 overflow-y-auto custom-scrollbar">
+                            <p id="logs-message"
+                                class="text-xs font-mono text-gray-600 dark:text-gray-300 break-all whitespace-pre-wrap">
+
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div
+                class="bg-gray-50 dark:bg-gray-700 px-6 py-4 flex flex-row-reverse border-t border-gray-100 dark:border-gray-800 gap-3">
+                <button type="button"
+                    class="log-close inline-flex items-center w-full justify-center rounded-lg bg-white dark:bg-gray-700 px-3 py-2 text-sm font-semibold text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 sm:w-auto transition-all">
+                    Close
+                </button>
+                <button type="button" id="copy-logs"
+                    class="inline-flex w-full justify-center rounded-lg px-3 py-2 text-sm font-semibold text-gray-600 dark:text-white hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 sm:w-auto transition-all items-center gap-1.5">
+                    <span class="material-symbols-outlined text-base">content_copy</span>
+                    Copy Log
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="/vendor/tippy-core/dist/umd/popper.min.js"></script>
+<script src="/vendor/tippy/dist/tippy-bundle.umd.min.js"></script>
+
+<script type="text/javascript" src="/vendor/moment/moment.min.js"></script>
+<script type="text/javascript" src="/vendor/daterangepicker/daterangepicker.js"></script>
+<script type="module" src="/js/dashboard-v2.js"></script>
+
+
+</html>
