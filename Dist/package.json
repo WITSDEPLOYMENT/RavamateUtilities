@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "@tailwindcss/cli": "^4.2.1",
