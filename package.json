@@ -1,9 +1,9 @@
 {
   "name": "ravamateutilities",
   "version": "1.0.0",
+  "type": "module",
   "description": "ravamate utilities offline supported app",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
